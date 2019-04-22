@@ -1,0 +1,19 @@
+debug: false
+logging:
+  level:
+    root: info
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc://localhost:3306/test
+    username: root
+    password: root
+
+csthink:
+  name: 生产服务器
+  description: write code , make magic
+  showAdevert: false
+  productNum: 20
+
+server:
+  port: 80

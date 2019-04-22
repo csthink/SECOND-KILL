@@ -1,0 +1,27 @@
+debug: true
+logging:
+  level:
+    root: info
+    # 启动信息去掉不需要的 CONDITIONS EVALUATION REPORT
+    org.springframework.boot.autoconfigure: ERROR
+
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: utf-8
+    mode: HTML5
+
+
+test:
+  name: 秒杀系统
+  description: write code , make magic
+  showAd: false
+  productNum: 20
