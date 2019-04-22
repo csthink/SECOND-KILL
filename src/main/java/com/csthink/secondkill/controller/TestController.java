@@ -1,14 +1,20 @@
 package com.csthink.secondkill.controller;
 
+import com.csthink.secondkill.domain.User;
 import com.csthink.secondkill.global.CodeMsg;
 import com.csthink.secondkill.global.Result;
-import com.csthink.secondkill.repository.entity.User;
+import com.csthink.secondkill.service.UserService;
+import com.csthink.secondkill.utils.MD5Utils;
+import java.util.Date;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +37,9 @@ public class TestController {
 
     @Value("${test.showAd}")
     private Boolean showAd;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     @ResponseBody
@@ -61,14 +70,43 @@ public class TestController {
         log.error("error message");
     }
 
+
     @RequestMapping(value = "/getUser", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public User getUser() {
-        User u = new User();
-        u.setUid(100);
-        u.setName("jack");
-        return u;
+    public Result<User> getUser() {
+        User user = userService.find(1);
+        System.out.println(user);
+        return Result.success(user);
     }
+
+    @RequestMapping(value = "/getUsers", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public Result<List<User>> getUsers() {
+        List<User> list = userService.findAll();
+        System.out.println(list);
+        return Result.success(list);
+    }
+
+    @PostMapping("/addUser")
+    @ResponseBody
+    public Result<String> addUser() {
+        User user = new User();
+        String salt = "geagexege";
+
+        user.setUsername("lucy");
+        user.setPassword(MD5Utils.rawPassToDbPass("123456", salt));
+        user.setSalt(salt);
+        user.setRealName("小莉2");
+        user.setPhone("15056992628");
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        user.setLastLogin(new Date());
+        userService.addUser(user);
+
+        return Result.success(user.getId().toString());
+    }
+
+
 
     @RequestMapping("/error")
     @ResponseBody
@@ -80,6 +118,12 @@ public class TestController {
     public String thymeleaf(Model model) {
         model.addAttribute("name", "jack");
         return "test";
+    }
+
+    public void setUser() {
+        User u = new User();
+        u.setUsername("jack");
+//        u.setPassword();
     }
 
 }

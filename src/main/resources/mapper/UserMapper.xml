@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csthink.secondkill.dao.UserDao">
+  <resultMap id="userMap" type="User">
+    <id property="id" column="id" javaType="Integer"/>
+    <result property="username" column="username" javaType="String"/>
+    <result property="password" column="password" javaType="String"/>
+    <result property="salt" column="salt" javaType="String"/>
+    <result property="realName" column="real_name" javaType="String"/>
+    <result property="phone" column="phone" javaType="String"/>
+    <result property="createTime" column="create_time" javaType="Date"/>
+    <result property="updateTime" column="update_time" javaType="Date"/>
+    <result property="lastLogin" column="last_login" javaType="Date"/>
+  </resultMap>
+
+   <sql id="userFields">
+        `id`, `username`, `password`, `salt`, `real_name`, `phone`, `create_time`, `update_time`, `last_login`
+    </sql>
+
+  <insert id="insert" parameterType="User" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    INSERT INTO `user`(<include refid="userFields"></include>) VALUES(null, #{username}, #{password}, #{salt},#{realName},#{phone},#{createTime}, #{updateTime}, #{lastLogin})
+  </insert>
+
+  <delete id="delete" parameterType="Integer">
+        DELETE FROM `user` WHERE `id`=#{id}
+  </delete>
+
+  <update id="update" parameterType="User">
+    UPDATE `user`
+    <set>
+      <if test="null != username">username=#{username},</if>
+      <if test="null != password">password=#{password},</if>
+      <if test="null != salt">salt=#{salt},</if>
+      <if test="null != realName">real_name=#{realName},</if>
+      <if test="null != phone">phone=#{phone},</if>
+      <if test="null != updateTime">update_time=#{updateTime}</if>
+      <if test="null != lastLogin">last_login=#{lastLogin}</if>
+    </set>
+    where `id`=#{id}
+  </update>
+
+  <select id="selectById" parameterType="Integer" resultMap="userMap">
+    SELECT <include refid="userFields"></include> FROM `user` WHERE `id`=#{id}
+  </select>
+
+  <select id="selectAll" resultMap="userMap">
+    SELECT <include refid="userFields"></include> FROM `user`
+  </select>
+
+</mapper>
