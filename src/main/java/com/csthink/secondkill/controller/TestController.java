@@ -1,6 +1,6 @@
 package com.csthink.secondkill.controller;
 
-import com.csthink.secondkill.domain.User;
+import com.csthink.secondkill.entity.User;
 import com.csthink.secondkill.global.CodeMsg;
 import com.csthink.secondkill.global.Result;
 import com.csthink.secondkill.service.UserService;
@@ -52,16 +52,18 @@ public class TestController {
     @RequestMapping("/hello/{name}")
     @ResponseBody
     public String hello(@PathVariable String name) {
-        return "hello " + name;
+        return "hello " + name + ", welcome21";
     }
 
     @RequestMapping("/hello2")
     @ResponseBody
+    // /test/hello2?id=1&name=jack
     public String hello2(int id, String name) {
         return "id: " + id + ", name: " + name;
     }
 
     @GetMapping("/log")
+    @ResponseBody
     public void log() {
         log.trace("trace message");
         log.debug("debug message");
@@ -106,8 +108,6 @@ public class TestController {
         return Result.success(user.getId().toString());
     }
 
-
-
     @RequestMapping("/error")
     @ResponseBody
     public Result<String> error() {
@@ -118,12 +118,6 @@ public class TestController {
     public String thymeleaf(Model model) {
         model.addAttribute("name", "jack");
         return "test";
-    }
-
-    public void setUser() {
-        User u = new User();
-        u.setUsername("jack");
-//        u.setPassword();
     }
 
 }

@@ -1,6 +1,6 @@
 package com.csthink.secondkill.service.impl;
 
-import com.csthink.secondkill.domain.User;
+import com.csthink.secondkill.entity.User;
 import com.csthink.secondkill.dao.UserDao;
 import com.csthink.secondkill.service.UserService;
 import java.util.List;

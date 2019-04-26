@@ -1,4 +1,4 @@
-package com.csthink.secondkill.domain;
+package com.csthink.secondkill.entity;
 
 import java.util.Date;
 

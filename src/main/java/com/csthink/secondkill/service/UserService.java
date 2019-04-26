@@ -1,6 +1,6 @@
 package com.csthink.secondkill.service;
 
-import com.csthink.secondkill.domain.User;
+import com.csthink.secondkill.entity.User;
 import java.util.List;
 
 public interface UserService {
